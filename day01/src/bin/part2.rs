@@ -1,14 +1,20 @@
+use anyhow::Context;
+
 fn main() {
     let input = include_str!("./input.txt");
-    let result = process(input);
-    println!("{}", result);
+    let output = process(input).unwrap();
+    println!("{}", output);
 }
 
-fn process(input: &str) -> u32 {
-    input.lines().map(|line| {
-        let (first, last) = extract_first_last(line).unwrap();
-        10 * first + last
-    }).sum::<u32>()
+fn process(input: &str) -> anyhow::Result<u32> {
+    input
+        .lines()
+        .map(|line| {
+            let (first, last) =
+                extract_first_last(line).with_context(|| "Line does not have any digits")?;
+            Ok(10 * first + last)
+        })
+        .sum()
 }
 
 fn extract_first_last(line: &str) -> Option<(u32, u32)> {
@@ -38,7 +44,7 @@ fn extract_from_end(input: &str) -> Option<u32> {
         ("four", 4),
         ("three", 3),
         ("two", 2),
-        ("one", 1)
+        ("one", 1),
     ];
 
     for (digit, value) in digits {
