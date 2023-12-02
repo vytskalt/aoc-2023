@@ -1,12 +1,14 @@
-use std::fs;
-
 fn main() {
-    let input = fs::read_to_string("input.txt").unwrap();
-    let result = input.lines().map(|line| {
+    let input = include_str!("./input.txt");
+    let result = process(input);
+    println!("{}", result);
+}
+
+fn process(input: &str) -> u32 {
+    input.lines().map(|line| {
         let (first, last) = extract_first_last(line).unwrap();
         10 * first + last
-    }).sum::<u32>();
-    println!("{}", result);
+    }).sum::<u32>()
 }
 
 fn extract_first_last(line: &str) -> Option<(u32, u32)> {
