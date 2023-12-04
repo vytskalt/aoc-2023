@@ -17,34 +17,34 @@ impl Card {
         let winning = numbers
             .next()
             .with_context(|| "No winning numbers provided")?
-            .split(' ')
-            .filter_map(|num| num.parse::<u32>().ok())
-            .collect();
+            .split_ascii_whitespace()
+            .map(|num| num.parse::<u32>())
+            .collect::<Result<_, _>>()?;
 
         let actual = numbers
             .next()
             .with_context(|| "No actual numbers provided")?
-            .split(' ')
-            .filter_map(|num| num.parse::<u32>().ok())
-            .collect();
+            .split_ascii_whitespace()
+            .map(|num| num.parse::<u32>())
+            .collect::<Result<_, _>>()?;
 
         Ok(Self { winning, actual })
     }
 
-    fn score(&self) -> u32 {
-        let mut score = 0;
-        for num in &self.winning {
-            if !self.actual.iter().any(|x| x == num) {
-                continue;
-            }
+    fn match_count(&self) -> u32 {
+        self.winning
+            .iter()
+            .filter(|w| self.actual.iter().any(|a| a == *w))
+            .count() as u32
+    }
 
-            if score == 0 {
-                score = 1;
-            } else {
-                score *= 2;
-            }
+    fn score(&self) -> u32 {
+        let matches = self.match_count(); 
+        if matches > 0 {
+            2_u32.pow(matches - 1)
+        } else {
+            0
         }
-        score
     }
 }
 

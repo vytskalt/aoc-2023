@@ -17,16 +17,16 @@ impl Card {
         let winning = numbers
             .next()
             .with_context(|| "No winning numbers provided")?
-            .split(' ')
-            .filter_map(|num| num.parse::<u32>().ok())
-            .collect();
+            .split_ascii_whitespace()
+            .map(|num| num.parse::<u32>())
+            .collect::<Result<_, _>>()?;
 
         let actual = numbers
             .next()
             .with_context(|| "No actual numbers provided")?
-            .split(' ')
-            .filter_map(|num| num.parse::<u32>().ok())
-            .collect();
+            .split_ascii_whitespace()
+            .map(|num| num.parse::<u32>())
+            .collect::<Result<_, _>>()?;
 
         Ok(Self { winning, actual })
     }
