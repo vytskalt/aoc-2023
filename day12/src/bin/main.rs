@@ -148,13 +148,11 @@ fn find_possible_combinations(
         })
     };
 
-    let damaged = || {
-        Some(State {
-            damaged_groups_index: state.damaged_groups_index,
-            conditions_index: state.conditions_index + 1,
-            consecutive_count: state.consecutive_count + 1,
-            last_damaged: true,
-        })
+    let damaged = || State {
+        damaged_groups_index: state.damaged_groups_index,
+        conditions_index: state.conditions_index + 1,
+        consecutive_count: state.consecutive_count + 1,
+        last_damaged: true,
     };
 
     let Some(condition) = conditions.get(state.conditions_index) else {
@@ -174,17 +172,13 @@ fn find_possible_combinations(
         Condition::Operational => operational()
             .map(|s| find_possible_combinations(cache, damaged_groups, conditions, s))
             .unwrap_or(0),
-        Condition::Damaged => damaged()
-            .map(|s| find_possible_combinations(cache, damaged_groups, conditions, s))
-            .unwrap_or(0),
+        Condition::Damaged => find_possible_combinations(cache, damaged_groups, conditions, damaged()),
         Condition::Unknown => {
             let operational = operational()
                 .map(|s| find_possible_combinations(cache, damaged_groups, conditions, s))
                 .unwrap_or(0);
 
-            let damaged = damaged()
-                .map(|s| find_possible_combinations(cache, damaged_groups, conditions, s))
-                .unwrap_or(0);
+            let damaged = find_possible_combinations(cache, damaged_groups, conditions, damaged());
 
             operational + damaged
         }
