@@ -11,5 +11,5 @@ fn hash(input: &str) -> u32 {
 }
 
 fn process(input: &str) -> u32 {
-    input.split(',').map(hash).sum()
+    input.strip_suffix('\n').unwrap().split(',').map(hash).sum()
 }

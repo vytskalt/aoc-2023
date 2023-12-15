@@ -114,6 +114,9 @@ version = "0.1.0"
 [[package]]
 name = "day15"
 version = "0.1.0"
+dependencies = [
+ "smallvec",
+]
 
 [[package]]
 name = "float-cmp"
@@ -141,3 +144,9 @@ checksum = "a7ea54a5aac399455538901e57d767125569eee6bcaee1323b32e02e22b2ac86"
 dependencies = [
  "float-cmp",
 ]
+
+[[package]]
+name = "smallvec"
+version = "1.11.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4dccd0940a2dcdf68d092b8cbab7dc0ad8fa938bf95787e1b916b0e3d0e8e970"
