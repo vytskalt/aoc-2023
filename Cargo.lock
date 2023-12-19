@@ -134,6 +134,13 @@ name = "day18"
 version = "0.1.0"
 
 [[package]]
+name = "day19"
+version = "0.1.0"
+dependencies = [
+ "range-set",
+]
+
+[[package]]
 name = "deprecate-until"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -240,6 +247,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5267fca4496028628a95160fc423a33e8b2e6af8a5302579e322e4b520293cae"
 dependencies = [
  "proc-macro2",
+]
+
+[[package]]
+name = "range-set"
+version = "0.0.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "714bc4849c399f77ab82177e9b4f012e02f3a7d6191023e016334edde5b21050"
+dependencies = [
+ "num-traits",
+ "smallvec",
 ]
 
 [[package]]
