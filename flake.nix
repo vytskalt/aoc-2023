@@ -1,5 +1,4 @@
-{
-  inputs = {
+{ inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     rust-overlay.url = "github:oxalica/rust-overlay";
     flake-utils.url = "github:numtide/flake-utils";
@@ -15,8 +14,10 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = [
-            pkgs.rust-bin.stable.latest.default
+          buildInputs = with pkgs; [
+            rust-bin.stable.latest.default
+            graphviz
+            z3
           ];
         };
       }
